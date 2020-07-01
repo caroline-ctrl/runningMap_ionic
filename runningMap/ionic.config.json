@@ -1,0 +1,7 @@
+{
+  "name": "runningMap",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
