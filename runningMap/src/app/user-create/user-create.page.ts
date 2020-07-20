@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+
 
 
 @Component({
@@ -23,7 +25,8 @@ export class UserCreatePage implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private storage: Storage
   ) { }
 
   ngOnInit() {
@@ -75,7 +78,7 @@ export class UserCreatePage implements OnInit {
     this.userService.createUser(data).subscribe(
       (result) => {
         console.log(result);
-        // this.cookieService.set('pseudo', data.pseudo, 1, 'http://localhost:3000', '', false, 'Lax');
+        this.storage.set('pseudo', this.connectedPseudo);
         this.presentAlert();
         this.router.navigate(['home']);
       },

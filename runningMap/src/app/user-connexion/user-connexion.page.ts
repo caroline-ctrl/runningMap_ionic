@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class UserConnexionPage implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private storage: Storage
   ) { }
 
   ngOnInit() {
@@ -53,8 +55,8 @@ export class UserConnexionPage implements OnInit {
         // récupère le pseudo de l'objet user
         this.connectedPseudo = this.userConnected.pseudo;
 
-        // cookie
-        // this.cookieService.set('pseudo', this.connectedPseudo, 7, 'http://localhost:3000', '', false, 'Lax');
+        // dataStorage
+        this.storage.set('pseudo', this.connectedPseudo);
 
         this.presentAlert();
 
