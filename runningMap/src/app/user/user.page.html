@@ -1,9 +1,73 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>user</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mon compte</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="container">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2">
+          <img class="avatarUser ml-3 mt-5" src="{{ currentUser.avatar }}" alt="avatar">
+        </ion-col>
+        <ion-col size="10">
+          <p class="mt-2 ml-3"><strong>Prénom : </strong>{{ currentUser.firstname }}</p>
+          <p class="ml-3"><strong>Nom : </strong>{{ currentUser.lastname }}</p>
+          <p class="ml-3"><strong>Pseudo : </strong>{{ currentUser.pseudo }}</p>
+          <p class="ml-3"><strong>Mail : </strong>{{ currentUser.mail }}</p>
+          <p class="ml-3"><strong>City : </strong>{{ currentUser.city }}</p>
+          <p class="ml-3"><strong>Genre : </strong>{{ currentUser.gender }}</p>
+          <p class="ml-3"><strong>Age : </strong>{{ currentUser.age }}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
+    <ion-button (click)="createUser()" [routerLink]="index/update/{{ currentUser._id }}" color="warning">Modifier
+    </ion-button>
+
+    <hr>
+
+    <h2>MODIFIER MOT DE PASSE</h2>
+    <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
+
+    <form [formGroup]="mp">
+
+      <ion-item>
+        <ion-input type="password" name="oldpPasswd" formControlName="oldpPasswd" required
+          placeholder="Ancien mot de passe"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="password" name="newPasswd" formControlName="newPasswd" required
+          placeholder="Nouveau mot de passe"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="password" name="confirmNewPasswd" formControlName="confirmNewPasswd" required
+          placeholder="Confirmation nouveau mot de passe"></ion-input>
+      </ion-item>
+
+      <ion-button (click)="loginUser()" [disabled]="user.invalid" color="success">Se connecter</ion-button>
+
+      <div *ngIf="mp.value.newPasswd === mp.value.confirmNewPasswd">
+        <ion-button (click)="editMp()" [disabled]="mp.invalid" color="success">Modifier</ion-button>
+      </div>
+      <div *ngIf="mp.value.newPasswd !== mp.value.confirmNewPasswd">
+        <ion-button disabled color="success">Modifier</ion-button>
+        <p>Vos mots de passe ne sont pas identiques</p>
+      </div>
+    </form>
+
+    <hr>
+
+    <h2>SUPPRIMER COMPTE</h2>
+    <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
+      <p>Votre compte sera supprimé définitivement</p>
+      <ion-button (click)="deleteUser()" color="danger">Supprimer</ion-button>
+
+  </div>
 </ion-content>

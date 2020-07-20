@@ -19,50 +19,61 @@ export class UserPage implements OnInit {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.mp = this.formBuilder.group({
       oldpPasswd: [ '', Validators.required ],
       newPasswd: [ '', Validators.required ],
-      confirmNewPasswd: ['', Validators.required]
+      confirmNewPasswd: [ '', Validators.required ]
     });
   }
 
+  // recupère le pseudo du cookie qu'il envoie a l'api et recupère l'objet user
+  // getBypseudo() {
+  //   this.userService.getUserByPseudo(this.pseudo).subscribe(
+  //     (user) => {
+  //       this.currentUser = user;
+  //     },
+  //     (err) => {
+  //       console.log(err);
+  //     }
+  //   );
+  // }
 
-    // modif le mp
-    editMp() {
-      const formValue = this.mp.value;
-      const data = {
-        pseudo: this.currentUser.pseudo,
-        oldPasswd: formValue.oldpPasswd,
-        NewPasswd: formValue.newPasswd
-      };
   
-      this.userService.updatePassword(data).subscribe(
-        (result) => {
-          alert('Mot de passe modifié');
-        },
-        (err) => {
-          console.log(err);
+  // modif le mp
+  editMp() {
+    const formValue = this.mp.value;
+    const data = {
+      pseudo: this.currentUser.pseudo,
+      oldPasswd: formValue.oldpPasswd,
+      NewPasswd: formValue.newPasswd
+    };
+
+    this.userService.updatePassword(data).subscribe(
+      (result) => {
+        alert('Mot de passe modifié');
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  // supprimer compte
+  deleteUser() {
+    this.userService.delete(this.currentUser._id).subscribe(
+      (user) => {
+        if (confirm('Voulez vous supprimer votre compte ?')) {
+          // this.cookieService.deleteAll('http://localhost:3000', '', false, 'Lax');
+          this.router.navigate([ 'index/accueil' ]);
         }
-      );
-    }
-  
-  
-    // supprimer compte
-    deleteUser() {
-      this.userService.delete(this.currentUser._id).subscribe(
-        (user) => {
-          if (confirm("Voulez vous supprimer votre compte ?")){
-            // this.cookieService.deleteAll('http://localhost:3000', '', false, 'Lax');
-            this.router.navigate(['index/accueil']);
-          }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 }
