@@ -77,7 +77,7 @@ export class UserCreatePage implements OnInit {
         console.log(result);
         // this.cookieService.set('pseudo', data.pseudo, 1, 'http://localhost:3000', '', false, 'Lax');
         this.presentAlert();
-        // this.router.navigate(['index/accueil']);
+        this.router.navigate(['home']);
       },
       (err) => {
         console.log(err);
