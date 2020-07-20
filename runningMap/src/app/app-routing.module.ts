@@ -16,11 +16,11 @@ const routes: Routes = [
     loadChildren: () => import('./user/user.module').then( m => m.UserPageModule)
   },
   {
-    path: 'user-create',
+    path: 'create',
     loadChildren: () => import('./user-create/user-create.module').then( m => m.UserCreatePageModule)
   },
   {
-    path: 'user-connexion',
+    path: 'login',
     loadChildren: () => import('./user-connexion/user-connexion.module').then( m => m.UserConnexionPageModule)
   },
 ];

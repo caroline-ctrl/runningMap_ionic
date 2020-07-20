@@ -7,8 +7,7 @@
 <ion-content [fullscreen]="true">
     <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
 
-  <ion-title class="mt-5">INSCRIPTION</ion-title>
-  <form (ngSubmit)="createUser()" [formGroup]="user">
+  <form [formGroup]="user">
     <ion-item>
       <ion-label>Prénom</ion-label>
       <ion-input type="texte" name="firstname" formControlName="firstname" required></ion-input>

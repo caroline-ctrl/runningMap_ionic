@@ -1,9 +1,25 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>user-connexion</ion-title>
+    <ion-title>Connexion</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
 
+  <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
+  <form [formGroup]="user">
+
+    <ion-item>
+      <ion-label>Mail</ion-label>
+      <ion-input type="email" name="mail" formControlName="mail" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Mot de passe</ion-label>
+      <ion-input type="password" name="password" formControlName="password" required></ion-input>
+    </ion-item>
+
+    <ion-button (click)="loginUser()" [disabled]="user.invalid" color="success">Se connecter</ion-button>
+    <small><a routerLink="/index/mpForget">Mot de passe oublié</a></small>
+  </form>
 </ion-content>
