@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-user',
@@ -19,10 +20,14 @@ export class UserPage implements OnInit {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private storage: Storage
   ) {}
 
   ngOnInit() {
+    this.pseudo = this.storage.get('pseudo');
+    this.getBypseudo();
+
     this.mp = this.formBuilder.group({
       oldpPasswd: [ '', Validators.required ],
       newPasswd: [ '', Validators.required ],
@@ -31,16 +36,16 @@ export class UserPage implements OnInit {
   }
 
   // recupère le pseudo du cookie qu'il envoie a l'api et recupère l'objet user
-  // getBypseudo() {
-  //   this.userService.getUserByPseudo(this.pseudo).subscribe(
-  //     (user) => {
-  //       this.currentUser = user;
-  //     },
-  //     (err) => {
-  //       console.log(err);
-  //     }
-  //   );
-  // }
+  getBypseudo() {
+    this.userService.getUserByPseudo(this.pseudo).subscribe(
+      (user) => {
+        this.currentUser = user;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 
   
   // modif le mp
