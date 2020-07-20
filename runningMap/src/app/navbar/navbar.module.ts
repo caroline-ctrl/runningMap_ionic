@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { NavbarPageRoutingModule } from './navbar-routing.module';
-
+import { MenuController } from '@ionic/angular';
 import { NavbarPage } from './navbar.page';
 
 @NgModule({
@@ -13,7 +13,8 @@ import { NavbarPage } from './navbar.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    NavbarPageRoutingModule
+    NavbarPageRoutingModule,
+    MenuController
   ],
   declarations: [NavbarPage]
 })
