@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inscription</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
+
+  <ion-title class="mt-5">INSCRIPTION</ion-title>
+  <form (ngSubmit)="createUser()" [formGroup]="user">
+    <ion-item>
+      <ion-label>Prénom</ion-label>
+      <ion-input type="texte" name="firstname" formControlName="firstname" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Nom</ion-label>
+      <ion-input type="texte" name="lastname" formControlName="lastname" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Pseudo</ion-label>
+      <ion-input type="texte" name="pseudo" formControlName="pseudo" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Mail</ion-label>
+      <ion-input type="email" name="mail" formControlName="mail" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Ville</ion-label>
+      <ion-input type="text" name="city" formControlName="city" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Gender</ion-label>
+      <ion-select name="gender" formControlName="gender">
+        <ion-select-option value="Femme">Femme</ion-select-option>
+        <ion-select-option value="Homme">Homme</ion-select-option>
+      </ion-select>    
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Age</ion-label>
+      <ion-select name="age" formControlName="age">
+        <ion-select-option *ngFor="let item of age_user(100); let i = index;" value="{{i}}">{{i}}</ion-select-option>
+      </ion-select>    
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Mot de passe</ion-label>
+      <ion-input type="password" name="password" formControlName="password" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Confirmer mot de passe</ion-label>
+      <ion-input type="password" name="confirmPassword" formControlName="confirmPassword" required></ion-input>
+    </ion-item>
+    
+    <div *ngIf="user.value.password === user.value.confirmPassword">
+      <ion-button (click)="createUser()" [disabled]="user.invalid" color="success">S'inscrire</ion-button>
+    </div>
+    <div *ngIf="user.value.password !== user.value.confirmPassword">
+      <ion-button disabled color="success">S'inscrire</ion-button>
+      <p>Votre mot passe n'est pas bon</p>
+    </div>
+    
+  </form>
+</ion-content>
