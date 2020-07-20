@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./user-connexion/user-connexion.module').then( m => m.UserConnexionPageModule)
   },
+  {
+    path: 'navbar',
+    loadChildren: () => import('./navbar/navbar.module').then( m => m.NavbarPageModule)
+  },
 ];
 
 @NgModule({
