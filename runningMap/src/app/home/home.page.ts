@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +8,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class HomePage {
 
-  constructor() {}
-
+  constructor(private menu: MenuController) {}
+  
+  openFirst() {
+    this.menu.enable(true, 'first');
+    this.menu.open('first');
+  }
 }
