@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-user',
@@ -10,7 +11,7 @@ import { Storage } from '@ionic/storage';
   styleUrls: [ './user.page.scss' ]
 })
 export class UserPage implements OnInit {
-  currentUser = null;
+  currentUser;
   pseudo = null;
   mp: FormGroup;
   confirmMp;
@@ -25,8 +26,11 @@ export class UserPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.pseudo = this.storage.get('pseudo');
-    this.getBypseudo();
+    this.storage.get('pseudo').then(val => {
+      this.pseudo = val;
+      this.getBypseudo();
+    });
+
 
     this.mp = this.formBuilder.group({
       oldpPasswd: [ '', Validators.required ],
@@ -35,7 +39,7 @@ export class UserPage implements OnInit {
     });
   }
 
-  // recupère le pseudo du cookie qu'il envoie a l'api et recupère l'objet user
+  // recupère le pseudo du datastorage qu'il envoie a l'api et recupère l'objet user
   getBypseudo() {
     this.userService.getUserByPseudo(this.pseudo).subscribe(
       (user) => {

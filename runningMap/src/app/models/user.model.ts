@@ -1,4 +1,5 @@
 export class User {
+
     constructor(
         public avatar: string,
         public firstname: string,
@@ -10,4 +11,5 @@ export class User {
         public age: number,
         public password: string,
     ){}
-}; 
+
+}

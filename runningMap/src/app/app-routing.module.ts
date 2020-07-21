@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./user-connexion/user-connexion.module').then( m => m.UserConnexionPageModule)
+  },  {
+    path: 'user-update',
+    loadChildren: () => import('./user-update/user-update.module').then( m => m.UserUpdatePageModule)
   },
+
 ];
 
 @NgModule({

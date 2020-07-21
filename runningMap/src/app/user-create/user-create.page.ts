@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { User } from '../models/user.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
@@ -20,6 +20,7 @@ export class UserCreatePage implements OnInit {
   connectedPseudo;
   connectedIsActive;
   userConnected;
+  subscribe;
 
   constructor(
     private userService: UserService,
@@ -81,6 +82,7 @@ export class UserCreatePage implements OnInit {
         this.storage.set('pseudo', this.connectedPseudo);
         this.presentAlert();
         this.router.navigate(['home']);
+        this.actualyNabBar();
       },
       (err) => {
         console.log(err);
@@ -90,5 +92,17 @@ export class UserCreatePage implements OnInit {
 
   age_user(n: number): any []{
     return Array(n);
+  }
+
+  // actualiser la navbar
+  actualyNabBar() {
+    this.router.routeReuseStrategy.shouldReuseRoute = (() => {
+      return false;
+    });
+    this.subscribe = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd){
+        this.router.navigated = false;
+      }
+    });
   }
 }
