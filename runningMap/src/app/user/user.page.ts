@@ -63,7 +63,8 @@ export class UserPage implements OnInit {
 
     this.userService.updatePassword(data).subscribe(
       (result) => {
-        alert('Mot de passe modifié');
+        console.log(result);
+        this.alertPassWord();
       },
       (err) => {
         console.log(err);
@@ -105,7 +106,17 @@ export class UserPage implements OnInit {
         }
       ]
     });
-
     await alert.present();
   }
+
+    // alert mot de passe
+    async alertPassWord() {
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'Mot de passe',
+        message: 'Mot de passe modifié',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }
 }
