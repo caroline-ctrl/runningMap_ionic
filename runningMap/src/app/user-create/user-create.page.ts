@@ -78,7 +78,6 @@ export class UserCreatePage implements OnInit {
 
     this.userService.createUser(data).subscribe(
       (result) => {
-        console.log(result);
         this.storage.set('pseudo', this.connectedPseudo);
         this.presentAlert();
         this.router.navigate(['home']);

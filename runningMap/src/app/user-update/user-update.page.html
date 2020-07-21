@@ -1,9 +1,69 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>user-update</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="monCompte"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modification</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+    <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
 
+  <form [formGroup]="user">
+    <ion-item>
+      <ion-label>Prénom</ion-label>
+      <ion-input type="texte" name="firstname" formControlName="firstname" value="{{ currentUser?.firstname }}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Nom</ion-label>
+      <ion-input type="texte" name="lastname" formControlName="lastname" value="{{ currentUser?.lastname }}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Pseudo</ion-label>
+      <ion-input type="texte" name="pseudo" formControlName="pseudo" value="{{ currentUser?.pseudo }}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Mail</ion-label>
+      <ion-input type="email" name="mail" formControlName="mail" value="{{ currentUser?.mail }}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Ville</ion-label>
+      <ion-input type="text" name="city" formControlName="city" value="{{ currentUser?.city }}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Gender</ion-label>
+      <ion-select name="gender" formControlName="gender" value="{{ currentUser?.gender }}">
+        <ion-select-option value="Femme">Femme</ion-select-option>
+        <ion-select-option value="Homme">Homme</ion-select-option>
+      </ion-select>    
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Age</ion-label>
+      <ion-select name="age" formControlName="age" value="{{ currentUser?.age }}">
+        <ion-select-option *ngFor="let item of age_user(100); let i = index;" value="{{i}}">{{i}}</ion-select-option>
+      </ion-select>    
+    </ion-item>
+
+    
+      <ion-button (click)="updateUser()" [disabled]="user.invalid" color="success">Modifier</ion-button>
+    
+  </form>
+
+  
+  <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
+  <form [formGroup]="user">
+    <ion-item>
+      <ion-label>Avatar</ion-label>
+      <ion-input type="file" (change)="sendFile($event.target.files)" accept="image/*" name="avatar" formControlName="avatar" value="{{ currentUser.avatar }}"></ion-input>
+    </ion-item>
+
+    <ion-button (click)="updateAvatar()" color="success">Modifier</ion-button>
+  </form>
 </ion-content>

@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { AlertController } from '@ionic/angular';
 import { User } from '../models/user.model';
 
 @Component({
@@ -22,15 +23,15 @@ export class UserPage implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private storage: Storage
+    private storage: Storage,
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
-    this.storage.get('pseudo').then(val => {
+    this.storage.get('pseudo').then((val) => {
       this.pseudo = val;
       this.getBypseudo();
     });
-
 
     this.mp = this.formBuilder.group({
       oldpPasswd: [ '', Validators.required ],
@@ -51,7 +52,6 @@ export class UserPage implements OnInit {
     );
   }
 
-  
   // modif le mp
   editMp() {
     const formValue = this.mp.value;
@@ -73,16 +73,39 @@ export class UserPage implements OnInit {
 
   // supprimer compte
   deleteUser() {
-    this.userService.delete(this.currentUser._id).subscribe(
+    this.userService.delete(this.currentUser?._id).subscribe(
       (user) => {
-        if (confirm('Voulez vous supprimer votre compte ?')) {
-          // this.cookieService.deleteAll('http://localhost:3000', '', false, 'Lax');
-          this.router.navigate([ 'index/accueil' ]);
-        }
+        this.presentAlertConfirm();
       },
       (err) => {
         console.log(err);
       }
     );
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Compte',
+      message: 'Voulez vous supprimer votre compte ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Annuler suppression');
+          }
+        }, {
+          text: 'Oui',
+          handler: () => {
+            this.storage.remove('pseudo');
+            this.router.navigate([ 'home' ]);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

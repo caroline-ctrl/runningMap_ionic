@@ -26,8 +26,8 @@
       </ion-row>
     </ion-grid>
 
-    <!-- <ion-button [routerLink]="index/update/{{ currentUser._id }}" color="warning">Modifier
-    </ion-button> -->
+    <ion-button href="/update/{{currentUser?._id}}" color="warning">Modifier
+    </ion-button>
 
     <hr>
 
@@ -64,8 +64,8 @@
 
     <h2>SUPPRIMER COMPTE</h2>
     <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
-      <p>Votre compte sera supprimé définitivement</p>
-      <ion-button (click)="deleteUser()" color="danger">Supprimer</ion-button>
+    <p>Votre compte sera supprimé définitivement</p>
+    <ion-button (click)="deleteUser()" color="danger">Supprimer</ion-button>
 
   </div>
 </ion-content>
