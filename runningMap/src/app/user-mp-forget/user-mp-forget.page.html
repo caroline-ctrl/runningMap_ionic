@@ -1,9 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>user-mp-forget</ion-title>
+    <ion-title>Mot de passe oublié</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="user">
 
-</ion-content>
+    <ion-item>
+      <ion-label>Mail</ion-label>
+      <ion-input type="email" name="mail" formControlName="mail" required></ion-input>
+    </ion-item>
+
+    <ion-button (click)="sendMail()" [disabled]="user.invalid" color="success">Valider</ion-button>
+
+  </form>
+</ion-content>  

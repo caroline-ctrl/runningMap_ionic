@@ -26,8 +26,9 @@ const routes: Routes = [
   {
     path: 'update/:id',
     loadChildren: () => import('./user-update/user-update.module').then( m => m.UserUpdatePageModule)
-  },  {
-    path: 'user-mp-forget',
+  },
+  {
+    path: 'mpForget',
     loadChildren: () => import('./user-mp-forget/user-mp-forget.module').then( m => m.UserMpForgetPageModule)
   },
 

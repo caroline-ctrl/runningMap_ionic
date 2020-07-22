@@ -23,6 +23,6 @@
     </ion-item>
 
     <ion-button (click)="loginUser()" [disabled]="user.invalid" color="success">Se connecter</ion-button>
-    <small><a routerLink="/index/mpForget">Mot de passe oublié</a></small>
+    <small><a [routerLink]="['/mpForget']">Mot de passe oublié</a></small>
   </form>
 </ion-content>
