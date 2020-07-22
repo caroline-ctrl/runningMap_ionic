@@ -84,7 +84,7 @@ export class UserUpdatePage implements OnInit {
     this.userService.updateUser(id, data).subscribe(
       (result) => {
         this.presentAlert();
-        this.router.navigate(['monCompte']);
+        // this.router.navigate(['monCompte']);
       },
       (err) => {
         console.log(err);
