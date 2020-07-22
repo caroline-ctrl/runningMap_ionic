@@ -30,7 +30,11 @@ const routes: Routes = [
   {
     path: 'mpForget',
     loadChildren: () => import('./user-mp-forget/user-mp-forget.module').then( m => m.UserMpForgetPageModule)
+  },  {
+    path: 'user-password',
+    loadChildren: () => import('./user-password/user-password.module').then( m => m.UserPasswordPageModule)
   },
+
 
 
 ];

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
 
@@ -35,7 +35,6 @@ export class UserMpForgetPage implements OnInit {
 
     this.userService.mail(this.mail).subscribe(() => {
     this.presentAlertPrompt(); // messageCode contient le code envoyé par le user
-      // this.router.navigate(['index/accueil']);
     });
   }
 
@@ -45,8 +44,9 @@ export class UserMpForgetPage implements OnInit {
       console.log(code);
       console.log(this.currentUser.token)
       if (code === this.currentUser.token){
-        // this.router.navigate(['index/password']);
         this.storage.set('token', code);
+        this.router.navigate(['home']);
+
       } else {
         this.presentAlert('Erreur', 'Le code n\est pas bon');
       }
