@@ -41,11 +41,11 @@ export class UserMpForgetPage implements OnInit {
   verifyCode(code) {
     this.userService.verifyCode(this.mail).subscribe((user) => {
       this.currentUser = user;
-      console.log(code);
+      console.log(typeof code);
       console.log(this.currentUser.token)
       if (code === this.currentUser.token){
         this.storage.set('token', code);
-        this.router.navigate(['home']);
+        this.router.navigate(['user-password']);
 
       } else {
         this.presentAlert('Erreur', 'Le code n\est pas bon');
