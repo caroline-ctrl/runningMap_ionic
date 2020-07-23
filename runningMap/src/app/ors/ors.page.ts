@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { OrsService } from './ors.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import * as L from 'leaflet';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -25,6 +24,7 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./ors.page.scss'],
 })
 export class OrsPage implements OnInit {
+  @ViewChild('map') mapContainer: ElementRef;
   itineraire: FormGroup;
   // reactivForm
   startingPoint;
@@ -102,7 +102,8 @@ export class OrsPage implements OnInit {
   // choix du sport
   getChoiceValue() {
     const formValue = this.itineraire.value;
-    return (this.choice = formValue.choiceValue);
+    this.choice = formValue.choiceValue;
+    return (this.choice);
   }
 
   // recupère les coordonnées GPS du point B
