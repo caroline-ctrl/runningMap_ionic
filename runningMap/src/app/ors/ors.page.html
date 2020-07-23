@@ -8,9 +8,6 @@
   <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
 
   <form [formGroup]="itineraire">
-    <ion-item>
-      <ion-input type="text" name="startingPoint" formControlName="startingPoint" placeholder="Point de depart" required></ion-input>
-    </ion-item>
 
     <ion-item>
       <ion-input type="text" name="endPoint" formControlName="endPoint" placeholder="Point d'arrivé" required></ion-input>
@@ -44,9 +41,7 @@
       </ion-radio-group>
     </ion-list>
 
-    <ion-button (click)="getStartingPoint(); getEndPoint()" color="success">Valider</ion-button><br>
-    <ion-button (click)="geolocationPointA()" color="success">test</ion-button>
-
+    <ion-button (click)="geolocationPointA(); getEndPoint()" [disabled]="itineraire.invalid" color="success">Valider</ion-button><br>
 
   </form>
 

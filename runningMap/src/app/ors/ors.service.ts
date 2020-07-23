@@ -17,9 +17,9 @@ export class OrsService {
 
   constructor(private http: HttpClient) {}
 
-  getStartingPoint(data) {
-    return this.http.get(this.URL_API_ORS + '/geocode/search?api_key=' + this.API_KEY + '&text=' + data);
-  }
+  // getStartingPoint(data) {
+  //   return this.http.get(this.URL_API_ORS + '/geocode/search?api_key=' + this.API_KEY + '&text=' + data);
+  // }
 
   getEndPoint(data) {
     return this.http.get(this.URL_API_ORS + '/geocode/search?api_key=' + this.API_KEY + '&text=' + data);
@@ -32,4 +32,8 @@ export class OrsService {
   matrix(locomotion, data) {
     return this.http.post(this.URL_API_ORS + '/v2/matrix/' + locomotion, data,  httpOptions);
   }
+
+  // geolocationPointA(dataLong, dataLat){
+  //   return this.http.get(this.URL_API_ORS + '/geocode/reverse?api_key=' + this.API_KEY + '&point.lon=' + dataLong + '&point.lat=' + dataLat);
+  // }
 }

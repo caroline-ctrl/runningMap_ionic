@@ -22,14 +22,11 @@ L.Marker.prototype.options.icon = iconDefault;
 @Component({
   selector: 'app-ors',
   templateUrl: './ors.page.html',
-  styleUrls: ['./ors.page.scss'],
+  styleUrls: [ './ors.page.scss' ]
 })
 export class OrsPage implements OnInit {
   @ViewChild('map') mapContainer: ElementRef;
   itineraire: FormGroup;
-  // reactivForm
-  startingPoint;
-  endPoint;
   // valeur coordonnées gps start
   longitudeStart;
   latitudeStart;
@@ -58,12 +55,11 @@ export class OrsPage implements OnInit {
   constructor(
     private orsService: OrsService,
     private formBuilder: FormBuilder,
-    private geolocation: Geolocation    
-  ) { }
+    private geolocation: Geolocation
+  ) {}
 
   ngOnInit() {
     this.itineraire = this.formBuilder.group({
-      startingPoint: [ '', Validators.required ],
       endPoint: [ '', Validators.required ],
       choiceValue: [ '', Validators.required ]
     });
@@ -77,35 +73,39 @@ export class OrsPage implements OnInit {
     }).addTo(this.mymap);
   }
 
+  // recupère les point long et lat du départ number
+  // retour un string
+  geolocationPointA() {
+    this.geolocation
+      .getCurrentPosition()
+      .then((resp) => {
+        this.latitudeStart = resp.coords.latitude;
+        this.longitudeStart = resp.coords.longitude;
 
-    // recupère les coordonnées GPS du point A
-  // return string
-  getStartingPoint() {
-    const formValue = this.itineraire.value;
-    const data = formValue.startingPoint;
-
-    this.orsService.getStartingPoint(data).subscribe(
-      (resultStart) => {
-        const coordinates =
-          resultStart['features']['0']['geometry']['coordinates'];
-        this.longitudeStart = coordinates['0'];
-        this.latitudeStart = coordinates['1'];
         this.pointsstartLon = this.longitudeStart + '';
         this.pointsstartLat = this.latitudeStart + '';
 
         this.start = this.pointsstartLon + ',' + this.pointsstartLat;
-      },
-      (err) => {
+      })
+      .catch((err) => {
         console.log(err);
-      }
-    );
+      });
+
+    // observe les changement de localisation de l'appareil
+    // utile lors de l'utilisation du gps
+    /* let watch = this.geolocation.watchPosition();
+      watch.subscribe((data) => {
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
+
+      })*/
   }
 
   // choix du sport
   getChoiceValue() {
     const formValue = this.itineraire.value;
     this.choice = formValue.choiceValue;
-    return (this.choice);
+    return this.choice;
   }
 
   // recupère les coordonnées GPS du point B
@@ -139,7 +139,6 @@ export class OrsPage implements OnInit {
     });
     return pointsArray;
   }
-
 
   // modifie l'orde dans le tableau
   pointsLatLong(items) {
@@ -202,28 +201,18 @@ export class OrsPage implements OnInit {
   matrix(locomotion, points) {
     let locationData = {
       locations: points,
-      metrics: ['distance', 'duration']
+      metrics: [ 'distance', 'duration' ]
     };
     this.orsService.matrix(locomotion, locationData).subscribe(
       (result) => {
         console.log(result);
-        const totalDuration = result['durations']['0']
-        const minute = (totalDuration[totalDuration.length-1])/60;
+        const totalDuration = result['durations']['0'];
+        const minute = totalDuration[totalDuration.length - 1] / 60;
         this.duration = minute.toFixed(2);
       },
       (err) => {
         console.log(err);
       }
     );
-  }
-
-
-  geolocationPointA() {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp.coords.latitude);
-      console.log(resp.coords.longitude);
-    }).catch(err => {
-      console.log(err);
-    });
   }
 }
