@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { OrsService } from './ors.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as L from 'leaflet';
+import { NavController } from '@ionic/angular';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -57,6 +58,7 @@ export class OrsPage implements OnInit {
   constructor(
     private orsService: OrsService,
     private formBuilder: FormBuilder,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
