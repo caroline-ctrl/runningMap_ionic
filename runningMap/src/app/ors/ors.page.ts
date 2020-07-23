@@ -90,15 +90,6 @@ export class OrsPage implements OnInit {
       .catch((err) => {
         console.log(err);
       });
-
-    // observe les changement de localisation de l'appareil
-    // utile lors de l'utilisation du gps
-    /* let watch = this.geolocation.watchPosition();
-      watch.subscribe((data) => {
-        console.log(data.coords.latitude);
-        console.log(data.coords.longitude);
-
-      })*/
   }
 
   // choix du sport
@@ -131,7 +122,8 @@ export class OrsPage implements OnInit {
     );
   }
 
-  // récup les points du point A au point B
+  // récup les points du point A au point B dans un tableau
+  // return array
   pointsArray(items) {
     let pointsArray = [];
     items.forEach((item) => {
@@ -141,6 +133,7 @@ export class OrsPage implements OnInit {
   }
 
   // modifie l'orde dans le tableau
+  // return array
   pointsLatLong(items) {
     let pointsArray = [];
     items.forEach((item) => {
@@ -150,6 +143,8 @@ export class OrsPage implements OnInit {
   }
 
   // permet de réaliser le tracé de l'itineraire
+  // modifie la map
+  // realise un tracé
   direction(locomotion, start, end) {
     this.orsService.direction(locomotion, start, end).subscribe(
       (result) => {
