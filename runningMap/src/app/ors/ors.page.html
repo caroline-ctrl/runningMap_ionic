@@ -1,9 +1,58 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>ors</ion-title>
+    <ion-title>Itineraire</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+  <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
 
+  <form [formGroup]="itineraire">
+    <ion-item>
+      <ion-input type="text" name="startingPoint" formControlName="startingPoint" placeholder="Point de depart" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" name="endPoint" formControlName="endPoint" placeholder="Point d'arrivé" required></ion-input>
+    </ion-item>
+
+    <ion-list>
+      <ion-radio-group value="biff">
+        <ion-list-header>
+          <ion-label>Type de sport</ion-label>
+        </ion-list-header>
+    
+        <ion-item>
+          <ion-label>Course a pied</ion-label>
+          <ion-radio slot="start" value="foot-walking"></ion-radio>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>Randonnée</ion-label>
+          <ion-radio slot="start" value="foot-hiking"></ion-radio>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>Vélo sur chemin</ion-label>
+          <ion-radio slot="start" value="cycling-mountain"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Vélo sur piste cyclable</ion-label>
+          <ion-radio slot="start" value="cycling-road"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+    <ion-button (click)="getStartingPoint(); getEndPoint()" [disabled]="itineraire.invalid" color="success">Valider</ion-button>
+
+  </form>
+
+  <h1 class="mt-3">Temps : {{ duration }} min</h1>
+  <small>Calcul de temps entre deux points uniquement pour le vélo sur piste cyclable. Concernant les autres sports, OpenRouteService n'a pas encore fait le necessaire</small>
+  
+  
+  <div class="shadow-lg p-3 mb-5 rounded">
+    <div class="map" id="map"></div>
+  </div>
 </ion-content>

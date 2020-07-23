@@ -34,8 +34,9 @@ const routes: Routes = [
   {
     path: 'user-password',
     loadChildren: () => import('./user-password/user-password.module').then( m => m.UserPasswordPageModule)
-  },  {
-    path: 'ors',
+  },
+  {
+    path: 'roundTrip',
     loadChildren: () => import('./ors/ors.module').then( m => m.OrsPageModule)
   },
 
