@@ -22,11 +22,13 @@
           <p class="ml-3"><strong>City : </strong>{{ currentUser?.city }}</p>
           <p class="ml-3"><strong>Genre : </strong>{{ currentUser?.gender }}</p>
           <p class="ml-3"><strong>Age : </strong>{{ currentUser?.age }}</p>
+          <p class="ml-3"><strong>id : </strong>{{ currentUser?._id }}</p>
+
         </ion-col>
       </ion-row>
     </ion-grid>
 
-    <ion-button [routerLink]="['/update', '5f1593c71ba0e21c2c4b167b']" color="warning">Modifier
+    <ion-button *ngIf="currentUser" [routerLink]="['/update', currentUser._id]" color="warning">Modifier
     </ion-button>
 
     <hr>
