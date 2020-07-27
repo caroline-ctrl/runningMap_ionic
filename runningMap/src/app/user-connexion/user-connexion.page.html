@@ -10,7 +10,7 @@
 <ion-content [fullscreen]="true">
 
   <!-- <div class="shadow-lg p-3 mb-5 rounded"> -->
-  <form [formGroup]="user">
+  <form [formGroup]="user" (ngSubmit)="loginUser()">
 
     <ion-item>
       <ion-label>Mail</ion-label>
@@ -22,7 +22,7 @@
       <ion-input type="password" name="password" formControlName="password" required></ion-input>
     </ion-item>
 
-    <ion-button (click)="loginUser()" [disabled]="user.invalid" color="success">Se connecter</ion-button>
+    <ion-button [disabled]="user.invalid" color="success">Se connecter</ion-button>
     <small><a [routerLink]="['/mpForget']">Mot de passe oublié</a></small>
   </form>
 </ion-content>
