@@ -54,12 +54,14 @@ export class UserUpdatePage implements OnInit {
 
   // recupère l'objet user a partir de l'id
   getUserById(id: string) {
-    this.userService.getUserById(id).then(
+    this.userService.getUserById(id).subscribe(
       (user) => {
         this.currentUser = user;
-      }).catch((err) => {
+      },
+      (err) => {
         console.log(err);
-      });
+      }
+    );
   }
 
   // modifie le user et renvoie un message
@@ -79,13 +81,15 @@ export class UserUpdatePage implements OnInit {
 
     const id = this.currentUser._id;
 
-    this.userService.updateUser(id, data).then(
+    this.userService.updateUser(id, data).subscribe(
       (result) => {
         this.presentAlert();
         this.router.navigate(['monCompte']);
-      }).catch((err) => {
+      },
+      (err) => {
         console.log(err);
-      });
+      }
+    );
   }
 
   sendFile(files: FileList) {
@@ -108,13 +112,15 @@ export class UserUpdatePage implements OnInit {
 
     const id = this.currentUser._id;
 
-    this.userService.updateUser(id, data).then(
+    this.userService.updateUser(id, data).subscribe(
       (result) => {
         console.log('user modifié');
         // this.router.navigate(["index/accueil"]);
-      }).catch((err) => {
+      },
+      (err) => {
         console.log(err);
-      });
+      }
+    );
   }
 
   age_user(n: number): any []{
