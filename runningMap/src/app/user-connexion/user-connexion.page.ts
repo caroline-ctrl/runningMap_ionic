@@ -51,6 +51,7 @@ export class UserConnexionPage implements OnInit {
 
     this.userService.login(data).then(
       (user) => {
+        console.log(user);
         this.userConnected = user;
         // récupère le pseudo de l'objet user
         this.connectedPseudo = this.userConnected.pseudo;
