@@ -71,7 +71,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-android-permissions": {},
-      "cordova-plugin-request-location-accuracy": {}
+      "cordova-plugin-request-location-accuracy": {},
+      "cordova-plugin-geolocation": {}
     }
   }
 }
