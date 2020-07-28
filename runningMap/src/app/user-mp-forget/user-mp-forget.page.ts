@@ -33,13 +33,13 @@ export class UserMpForgetPage implements OnInit {
   sendMail() {
     this.mail = this.user.value.mail;
 
-    this.userService.mail(this.mail).subscribe(() => {
+    this.userService.mail(this.mail).then(() => {
     this.presentAlertPrompt(); // messageCode contient le code envoyé par le user
     });
   }
 
   verifyCode(code) {
-    this.userService.verifyCode(this.mail).subscribe((user) => {
+    this.userService.verifyCode(this.mail).then((user) => {
       this.currentUser = user;
       console.log(typeof code);
       console.log(this.currentUser.token)
@@ -50,7 +50,7 @@ export class UserMpForgetPage implements OnInit {
       } else {
         this.presentAlert('Erreur', 'Le code n\est pas bon');
       }
-    }, err => {
+    }).catch((err) => {
       console.log(err);
     });
   }

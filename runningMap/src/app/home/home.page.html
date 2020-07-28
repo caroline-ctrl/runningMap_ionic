@@ -33,9 +33,9 @@
       <h1>Bon sport !</h1>
     </div>
     <div class="example-button-row text-center my-5">
-      <ion-button color="secondary" routerLink="/create">Inscription</ion-button>
+      <ion-button color="secondary" [routerLink]="['/create']">Inscription</ion-button>
 
-      <ion-button color="success" routerLink="/login">Connexion</ion-button>
+      <ion-button color="success" [routerLink]="['/login']">Connexion</ion-button>
     </div>
     <ion-button color="danger" (click)="removeDataStorage()" routerLink="/home">Deconnexion</ion-button>
 
