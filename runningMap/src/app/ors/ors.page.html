@@ -41,7 +41,7 @@
       </ion-radio-group>
     </ion-list>
 
-    <ion-button (click)="geolocationPointA(); getEndPoint()" [disabled]="itineraire.invalid" color="success">Valider</ion-button><br>
+    <ion-button (click)="checkGPSPermission(); getEndPoint()" [disabled]="itineraire.invalid" color="success">Valider</ion-button><br>
 
   </form>
 
