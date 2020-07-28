@@ -39,9 +39,9 @@ export class UserPasswordPage implements OnInit {
       token: this.token
     };
 
-    this.userService.changePassword(data).then(user => {
+    this.userService.changePassword(data).subscribe(user => {
       console.log(user);
-      // this.storage.set('pseudo', user.pseudo);
+      this.storage.set('pseudo', user.pseudo);
       this.storage.remove('token');
       this.router.navigate(['home']);
     });

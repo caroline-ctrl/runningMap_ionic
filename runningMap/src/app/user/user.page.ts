@@ -42,12 +42,14 @@ export class UserPage implements OnInit {
 
   // recupère le pseudo du datastorage qu'il envoie a l'api et recupère l'objet user
   getBypseudo() {
-    this.userService.getUserByPseudo(this.pseudo).then(
+    this.userService.getUserByPseudo(this.pseudo).subscribe(
       (user) => {
         this.currentUser = user;
-      }).catch((err) => {
+      },
+      (err) => {
         console.log(err);
-      });
+      }
+    );
   }
 
   // modif le mp
@@ -59,23 +61,27 @@ export class UserPage implements OnInit {
       NewPasswd: formValue.newPasswd
     };
 
-    this.userService.updatePassword(data).then(
+    this.userService.updatePassword(data).subscribe(
       (result) => {
         console.log(result);
         this.alertPassWord();
-      }).catch((err) => {
+      },
+      (err) => {
         console.log(err);
-      });
+      }
+    );
   }
 
   // supprimer compte
   deleteUser() {
-    this.userService.delete(this.currentUser?._id).then(
+    this.userService.delete(this.currentUser?._id).subscribe(
       (user) => {
         this.presentAlertConfirm();
-      }).catch((err) => {
+      },
+      (err) => {
         console.log(err);
-      });
+      }
+    );
   }
 
   async presentAlertConfirm() {

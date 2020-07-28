@@ -76,15 +76,17 @@ export class UserCreatePage implements OnInit {
     this.confirmMp = this.user.value.confirmPassword;
     this.mp = this.user.value.password;
 
-    this.userService.createUser(data).then(
+    this.userService.createUser(data).subscribe(
       (result) => {
         this.storage.set('pseudo', this.connectedPseudo);
         this.presentAlert();
         this.router.navigate(['home']);
         this.actualyNabBar();
-      }).catch((err) => {
+      },
+      (err) => {
         console.log(err);
-      });
+      }
+    );
   }
 
   age_user(n: number): any []{

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
-import { HTTP } from '@ionic-native/http/ngx';
 
 
 @Injectable({
@@ -8,138 +8,55 @@ import { HTTP } from '@ionic-native/http/ngx';
 })
 export class UserService {
 
-  headers = new Headers({
-    'Content-Type':  'application/json'
-  });
-
   private URL_API = 'https://apirunningmap.herokuapp.com';
 
-  constructor(private http: HTTP) { }
+  constructor(private http: HttpClient) { }
 
   getAllUser() {
-    return this.http.get(this.URL_API + '/users', {}, {
-      headers: this.headers
-    }).then(res => console.log(res)).catch(err => console.log(err));
+    return this.http.get<User[]>(this.URL_API + '/users');
   }
 
   getUserById(id: string) {
-    return this.http.get(this.URL_API + '/user/' + id, {}, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.get<User>(this.URL_API + '/user/' + id);
   }
 
   createUser(data) {
-    return this.http.post(this.URL_API + '/create/' , data, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.post<User>(this.URL_API + '/create/' , data);
   }
 
   updateUser(id, data) {
-    return this.http.put(this.URL_API + '/update/' + id, data, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.put<User>(this.URL_API + '/update/' + id, data);
   }
 
   uploadAvatar(id, data) {
-    return this.http.put(this.URL_API + '/update/' + id, data, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.put<User>(this.URL_API + '/update/' + id, data);
   }
 
   updatePassword(data) {
-    return this.http.put(this.URL_API + '/newPassword/', data, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.put<User>(this.URL_API + '/newPassword/', data);
   }
 
   delete(id) {
-    return this.http.delete(this.URL_API + '/delete/' + id, {}, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.delete<User>(this.URL_API + '/delete/' + id);
   }
 
   login(data) {
-    return this.http.post(this.URL_API + '/log/', data, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.post<User>(this.URL_API + '/log/', data);
   }
   
   getUserByPseudo(data) {
-    return this.http.post(this.URL_API + '/monCompte/', {"pseudo": data}, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.post<User>(this.URL_API + '/monCompte/', {"pseudo": data});
   }
 
   mail(data) {
-    return this.http.post(this.URL_API + '/mail/', {"mail": data}, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.post<User>(this.URL_API + '/mail/', {"mail": data});
   }
 
   verifyCode(data) {
-    return this.http.post(this.URL_API + '/verifyCode/', {"mail": data}, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.post<User>(this.URL_API + '/verifyCode/', {"mail": data});
   }
 
   changePassword(data) {
-    return this.http.put(this.URL_API + '/forgetPassword/', data, {
-      headers: this.headers
-    }).then(data => {
-      console.log(data.headers);
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    return this.http.put<User>(this.URL_API + '/forgetPassword/', data);
   }
 }

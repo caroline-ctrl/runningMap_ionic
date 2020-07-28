@@ -49,9 +49,8 @@ export class UserConnexionPage implements OnInit {
       password: formValue.password
     };
 
-    this.userService.login(data).then(
+    this.userService.login(data).subscribe(
       (user) => {
-        console.log(user);
         this.userConnected = user;
         // récupère le pseudo de l'objet user
         this.connectedPseudo = this.userConnected.pseudo;
@@ -62,9 +61,11 @@ export class UserConnexionPage implements OnInit {
         this.presentAlert();
 
         this.router.navigate(['home']);
-      }).catch((err) => {
+      },
+      (err) => {
         console.log(err);
-      });
+      }
+    );
   }
 
 }
