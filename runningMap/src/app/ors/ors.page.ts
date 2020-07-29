@@ -4,6 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import {
+  LaunchNavigator,
+  LaunchNavigatorOptions
+} from '@ionic-native/launch-navigator/ngx';
 import * as L from 'leaflet';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -60,7 +64,8 @@ export class OrsPage implements OnInit {
     private formBuilder: FormBuilder,
     private geolocation: Geolocation,
     private androidPermissions: AndroidPermissions,
-    private locationAccuracy: LocationAccuracy
+    private locationAccuracy: LocationAccuracy,
+    private launchNavigator: LaunchNavigator
   ) {}
 
   ngOnInit() {
@@ -78,57 +83,68 @@ export class OrsPage implements OnInit {
     }).addTo(this.mymap);
   }
 
-
-    // Verifie si permission acces GPS 
-    checkGPSPermission() {
-      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
-        result => {
+  // Verifie si permission acces GPS
+  checkGPSPermission() {
+    this.androidPermissions
+      .checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION)
+      .then(
+        (result) => {
           if (result.hasPermission) {
             this.askToTurnOnGPS();
           } else {
             this.requestGPSPermission();
           }
         },
-        err => {
+        (err) => {
           alert(err);
         }
       );
-    }
-  
-    // Obtenir l'autorisation de localisation de l'utilisateur
-    requestGPSPermission() {
-      this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-        if (canRequest) {
-          this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(() => {
-            console.log('success'),
-            err => console.log(err)
+  }
+
+  // Obtenir l'autorisation de localisation de l'utilisateur
+  requestGPSPermission() {
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      if (canRequest) {
+        this.locationAccuracy
+          .request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
+          .then(() => {
+            console.log('success'), (err) => console.log(err);
           });
-        } else {
-          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
-            .then(
-              () => {
-                this.askToTurnOnGPS();
-              },
-              error => {
-                alert('requestPermission Error requesting location permissions ' + error)
-              }
-            );
-        }
-      });
-    }
-  
-  
-    // si on a l'autorisation d'accés à la localisation : ouvre la boite de dialogue
-    askToTurnOnGPS() {
-      this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+      } else {
+        this.androidPermissions
+          .requestPermission(
+            this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION
+          )
+          .then(
+            () => {
+              this.askToTurnOnGPS();
+            },
+            (error) => {
+              alert(
+                'requestPermission Error requesting location permissions ' +
+                  error
+              );
+            }
+          );
+      }
+    });
+  }
+
+  // si on a l'autorisation d'accés à la localisation : ouvre la boite de dialogue
+  askToTurnOnGPS() {
+    this.locationAccuracy
+      .request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
+      .then(
         () => {
           this.getLocationCoordinates();
         },
-        error => alert('Error requesting location permissions ' + JSON.stringify(error))
+        (error) =>
+          alert(
+            'Error requesting location permissions ' + JSON.stringify(error)
+          )
       );
-    }
-  
-  
+  }
+
   // recupère les point long et lat du départ number
   // retour un string
   getLocationCoordinates() {
@@ -142,17 +158,28 @@ export class OrsPage implements OnInit {
         this.pointsstartLat = this.latitudeStart + '';
 
         this.start = this.pointsstartLon + ',' + this.pointsstartLat;
-        
+
         let watch = this.geolocation.watchPosition();
         watch.subscribe((data) => {
-        // data can be a set of coordinates, or an error (if an error occurred).
-        console.log(data.coords.latitude);
-        console.log(data.coords.longitude);
+          // data can be a set of coordinates, or an error (if an error occurred).
+          console.log(data.coords.latitude);
+          console.log(data.coords.longitude);
         });
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  // utilisation du gps
+  gpsNavigate() {
+    let options: LaunchNavigatorOptions = {
+      start: this.pointsstartLat + ',' + this.pointsstartLon
+    };
+
+    this.launchNavigator.navigate(this.pointsEndLat + ',' + this.pointsEndLong, options)
+    .then(() => console.log('success'))
+    .catch(err => console.log(err));
   }
 
   // choix du sport
