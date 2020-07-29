@@ -122,7 +122,7 @@ export class OrsPage implements OnInit {
     askToTurnOnGPS() {
       this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
         () => {
-          console.log('permission ok');
+          this.getLocationCoordinates();
         },
         error => alert('Error requesting location permissions ' + JSON.stringify(error))
       );
