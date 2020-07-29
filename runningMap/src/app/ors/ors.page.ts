@@ -129,19 +129,6 @@ export class OrsPage implements OnInit {
     }
   
   
-    // une fois le GPS activé, on obtient l'emplacement de l'appareil
-    // getLocationCoordinates() {
-    //   this.geolocation.getCurrentPosition().then((resp) => {
-    //     this.locationCoords.latitude = resp.coords.latitude;
-    //     this.locationCoords.longitude = resp.coords.longitude;
-    //     this.locationCoords.accuracy = resp.coords.accuracy;
-    //     this.locationCoords.timestamp = resp.timestamp;
-    //   }).catch((error) => {
-    //     alert('Error getting location' + error);
-    //   });
-    // }
-  
-
   // recupère les point long et lat du départ number
   // retour un string
   getLocationCoordinates() {
