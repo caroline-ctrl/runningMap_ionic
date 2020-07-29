@@ -4,10 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
-import {
-  LaunchNavigator,
-  LaunchNavigatorOptions
-} from '@ionic-native/launch-navigator/ngx';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
 import * as L from 'leaflet';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
