@@ -168,16 +168,6 @@ export class OrsPage implements OnInit {
       });
   }
 
-  // utilisation du gps
-  gpsNavigate() {
-    let options: LaunchNavigatorOptions = {
-      start: this.pointsstartLat + ',' + this.pointsstartLon
-    };
-
-    this.launchNavigator.navigate(this.pointsEndLat + ',' + this.pointsEndLong, options)
-    .then(() => console.log('success'))
-    .catch(err => console.log(err));
-  }
 
   // choix du sport
   getChoiceValue() {
@@ -208,6 +198,22 @@ export class OrsPage implements OnInit {
       }
     );
   }
+
+
+  // utilisation du gps
+  gpsNavigate() {
+    let options: LaunchNavigatorOptions = {
+      start: [this.latitudeStart, this.longitudeStart]
+    };
+
+    this.launchNavigator.navigate([this.latitudeEnd, this.longitudeEnd], options)
+    .then(success => {
+      console.log(success);
+    }, err => {
+      console.log(err);
+    });
+  }
+  
 
   // récup les points du point A au point B dans un tableau
   // return array

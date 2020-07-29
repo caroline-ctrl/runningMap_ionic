@@ -28,7 +28,6 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    LaunchNavigator
   ],
   providers: [
     StatusBar,
@@ -37,6 +36,7 @@ import { AppRoutingModule } from './app-routing.module';
     Geolocation,
     LocationAccuracy,
     HTTP,
+    LaunchNavigator,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [ AppComponent ]
