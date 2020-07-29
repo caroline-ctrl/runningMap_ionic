@@ -83,11 +83,12 @@ export class OrsPage implements OnInit {
     checkGPSPermission() {
       this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
         result => {
-          if (result.hasPermission) {
-            this.askToTurnOnGPS();
-          } else {
-            this.requestGPSPermission();
-          }
+          console.log(result.hasPermission);
+          // if (result.hasPermission) {
+          //   this.askToTurnOnGPS();
+          // } else {
+          //   this.requestGPSPermission();
+          // }
         },
         err => {
           alert(err);
