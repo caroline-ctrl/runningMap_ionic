@@ -81,14 +81,13 @@ export class OrsPage implements OnInit {
 
     // Verifie si permission acces GPS 
     checkGPSPermission() {
-      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
         result => {
-          console.log(result.hasPermission);
-          // if (result.hasPermission) {
-          //   this.askToTurnOnGPS();
-          // } else {
-          //   this.requestGPSPermission();
-          // }
+          if (result.hasPermission) {
+            this.askToTurnOnGPS();
+          } else {
+            this.requestGPSPermission();
+          }
         },
         err => {
           alert(err);
@@ -100,7 +99,10 @@ export class OrsPage implements OnInit {
     requestGPSPermission() {
       this.locationAccuracy.canRequest().then((canRequest: boolean) => {
         if (canRequest) {
-          console.log("4");
+          this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(() => {
+            console.log('success'),
+            err => console.log(err)
+          });
         } else {
           this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
             .then(
