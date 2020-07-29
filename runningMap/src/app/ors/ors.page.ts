@@ -79,6 +79,56 @@ export class OrsPage implements OnInit {
   }
 
 
+    // Verifie si permission acces GPS 
+    checkGPSPermission() {
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
+        result => {
+          if (result.hasPermission) {
+            this.askToTurnOnGPS();
+          } else {
+            this.requestGPSPermission();
+          }
+        },
+        err => {
+          alert(err);
+        }
+      );
+    }
+  
+    // Obtenir l'autorisation de localisation de l'utilisateur
+    requestGPSPermission() {
+      this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+        if (canRequest) {
+          this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(() => {
+            console.log('success'),
+            err => console.log(err)
+          });
+        } else {
+          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+            .then(
+              () => {
+                this.askToTurnOnGPS();
+              },
+              error => {
+                alert('requestPermission Error requesting location permissions ' + error)
+              }
+            );
+        }
+      });
+    }
+  
+  
+    // si on a l'autorisation d'accés à la localisation : ouvre la boite de dialogue
+    askToTurnOnGPS() {
+      this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+        () => {
+          console.log('permission ok');
+        },
+        error => alert('Error requesting location permissions ' + JSON.stringify(error))
+      );
+    }
+  
+  
   // recupère les point long et lat du départ number
   // retour un string
   getLocationCoordinates() {
