@@ -142,6 +142,13 @@ export class OrsPage implements OnInit {
         this.pointsstartLat = this.latitudeStart + '';
 
         this.start = this.pointsstartLon + ',' + this.pointsstartLat;
+        
+        let watch = this.geolocation.watchPosition();
+        watch.subscribe((data) => {
+        // data can be a set of coordinates, or an error (if an error occurred).
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
+        });
       })
       .catch((err) => {
         console.log(err);
