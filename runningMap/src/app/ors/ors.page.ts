@@ -55,6 +55,8 @@ export class OrsPage implements OnInit {
   tablePoints;
   // temps entre le point A et le point B
   duration;
+  // locomotion
+  locomotionGps;
 
   constructor(
     private orsService: OrsService,
@@ -198,24 +200,10 @@ export class OrsPage implements OnInit {
       }
     );
   }
-
-
-  // utilisation du gps
-  gpsNavigate() {
-    let options: LaunchNavigatorOptions = {
-      start: [this.latitudeStart, this.longitudeStart]
-    };
-
-    this.launchNavigator.navigate([this.latitudeEnd, this.longitudeEnd], options)
-    .then(success => {
-      console.log(success);
-    }, err => {
-      console.log(err);
-    });
-  }
   
 
   // récup les points du point A au point B dans un tableau
+  // latitude, longitude
   // return array
   pointsArray(items) {
     let pointsArray = [];
@@ -226,6 +214,7 @@ export class OrsPage implements OnInit {
   }
 
   // modifie l'orde dans le tableau
+  // longitude, latitude
   // return array
   pointsLatLong(items) {
     let pointsArray = [];
@@ -302,5 +291,28 @@ export class OrsPage implements OnInit {
         console.log(err);
       }
     );
+  }
+
+
+  // utilisation du gps
+  gpsNavigate() {
+    let locomation = this.getChoiceValue();
+    if (locomation === ('foot-walking' || 'foot-hiking')){
+      this.locomotionGps = 'walking';
+    } else if (locomation === ('cycling-mountain' || 'cycling-road')) {
+      this.locomotionGps = 'driving';
+    }
+
+    let options: LaunchNavigatorOptions = {
+      start: [this.latitudeStart, this.longitudeStart],
+      transportMode: this.locomotionGps
+    };
+
+    this.launchNavigator.navigate(this.pointsArray(this.tablePoints), options)
+    .then(success => {
+      console.log(success);
+    }, err => {
+      console.log(err);
+    });
   }
 }
