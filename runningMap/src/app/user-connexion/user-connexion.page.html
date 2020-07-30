@@ -22,7 +22,7 @@
       <ion-input type="password" name="password" formControlName="password" required></ion-input>
     </ion-item>
 
-    <ion-button (click)="loginUser()" [disabled]="user.invalid" color="success">Se connecter</ion-button>
+    <ion-button (click)="loginUser(); checkGPSPermission()" [disabled]="user.invalid" color="success">Se connecter</ion-button>
     <small><a [routerLink]="['/mpForget']">Mot de passe oublié</a></small>
   </form>
 </ion-content>
