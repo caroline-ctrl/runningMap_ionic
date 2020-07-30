@@ -304,11 +304,9 @@ export class OrsPage implements OnInit {
     }
 
     let options: LaunchNavigatorOptions = {
-      start: [this.latitudeStart, this.longitudeStart],
+      start: this.pointsArray(this.tablePoints),
       transportMode: this.locomotionGps
     };
-
-    console.log(this.pointsArray(this.tablePoints));
 
     this.launchNavigator.navigate([this.latitudeEnd, this.longitudeEnd], options)
     .then(success => {
