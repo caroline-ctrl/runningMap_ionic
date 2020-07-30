@@ -244,7 +244,7 @@ export class OrsPage implements OnInit {
     });
 
     let options: LaunchNavigatorOptions = {
-      start: this.pointsArray(pointsArray),
+      start: pointsArray,
       transportMode: this.locomotionGps
     };
 
