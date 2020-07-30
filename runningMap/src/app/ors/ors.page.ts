@@ -80,6 +80,8 @@ export class OrsPage implements OnInit {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
       maxZoom: 18
     }).addTo(this.mymap);
+
+    this.checkGPSPermission();
   }
 
   // Verifie si permission acces GPS
