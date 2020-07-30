@@ -175,6 +175,14 @@ export class OrsPage implements OnInit {
   getChoiceValue() {
     const formValue = this.itineraire.value;
     this.choice = formValue.choiceValue;
+    if (this.choice === 'foot-hiking' || 'foot-walking'){
+      this.locomotionGps = 'walking';
+    } else if (this.choice === 'cycling-mountain' || 'cycling-road') {
+      this.locomotionGps = 'driving';
+    }
+
+    console.log(this.choice);
+    console.log(this.locomotionGps);
     return this.choice;
   }
 
