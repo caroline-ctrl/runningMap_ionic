@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { OrsService } from './ors.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
-import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
 import * as L from 'leaflet';
 
@@ -62,8 +60,6 @@ export class OrsPage implements OnInit {
     private orsService: OrsService,
     private formBuilder: FormBuilder,
     private geolocation: Geolocation,
-    private androidPermissions: AndroidPermissions,
-    private locationAccuracy: LocationAccuracy,
     private launchNavigator: LaunchNavigator
   ) {}
 
@@ -82,67 +78,6 @@ export class OrsPage implements OnInit {
     }).addTo(this.mymap);
   }
 
-  // Verifie si permission acces GPS
-  checkGPSPermission() {
-    this.androidPermissions
-      .checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION)
-      .then(
-        (result) => {
-          if (result.hasPermission) {
-            this.askToTurnOnGPS();
-          } else {
-            this.requestGPSPermission();
-          }
-        },
-        (err) => {
-          alert(err);
-        }
-      );
-  }
-
-  // Obtenir l'autorisation de localisation de l'utilisateur
-  requestGPSPermission() {
-    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-      if (canRequest) {
-        this.locationAccuracy
-          .request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
-          .then(() => {
-            console.log('success'), (err) => console.log(err);
-          });
-      } else {
-        this.androidPermissions
-          .requestPermission(
-            this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION
-          )
-          .then(
-            () => {
-              this.askToTurnOnGPS();
-            },
-            (error) => {
-              alert(
-                'requestPermission Error requesting location permissions ' +
-                  error
-              );
-            }
-          );
-      }
-    });
-  }
-
-  // si on a l'autorisation d'accés à la localisation : ouvre la boite de dialogue
-  askToTurnOnGPS() {
-    this.locationAccuracy
-      .request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
-      .then(
-        () => {
-          this.getLocationCoordinates();
-        },
-        (error) =>
-          alert(
-            'Error requesting location permissions ' + JSON.stringify(error)
-          )
-      );
-  }
 
   // recupère les point long et lat du départ number
   // retour un string
