@@ -238,8 +238,13 @@ export class OrsPage implements OnInit {
       this.locomotionGps = 'driving';
     }
 
+    let pointsArray = [];
+    this.tablePoints.forEach((item) => {
+      pointsArray.push(item[1], item[0]);
+    });
+
     let options: LaunchNavigatorOptions = {
-      start: this.pointsArray(this.tablePoints),
+      start: this.pointsArray(pointsArray),
       transportMode: this.locomotionGps
     };
 
