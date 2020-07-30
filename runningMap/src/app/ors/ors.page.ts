@@ -85,6 +85,7 @@ export class OrsPage implements OnInit {
     this.geolocation
       .getCurrentPosition()
       .then((resp) => {
+        this.getEndPoint();
         this.latitudeStart = resp.coords.latitude;
         this.longitudeStart = resp.coords.longitude;
 
