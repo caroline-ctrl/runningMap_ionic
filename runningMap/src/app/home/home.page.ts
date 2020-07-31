@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { Router, NavigationEnd } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,18 +13,30 @@ export class HomePage implements OnInit {
   dataStorage;
   subscribe;
   locationCoords: any;
+  pseudo = null;
+
+
+  editMenu$ = new Observable<boolean>(observer => {
+    this.storage.get('pseudo').then((val) => {
+      this.pseudo = val;
+
+      if (this.pseudo) {
+        observer.next(false);
+      } else {
+        observer.next(true);
+      }
+    });
+  });
+
+
 
   constructor(
     private menu: MenuController,
     private storage: Storage,
-    private router: Router,
     public alertController: AlertController,
   ) {}
 
   ngOnInit(){
-    this.storage.get('pseudo').then(val => {
-      this.dataStorage = val;
-    });
   }
   
   openFirst() {
@@ -36,21 +48,21 @@ export class HomePage implements OnInit {
   removeDataStorage() {
     this.storage.remove('pseudo');
     this.presentAlert();
-    this.actualyNabBar();
+    // this.actualyNabBar();
   }
 
 
   // actualiser la navbar
-  actualyNabBar() {
-    this.router.routeReuseStrategy.shouldReuseRoute = (() => {
-      return false;
-    });
-    this.subscribe = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd){
-        this.router.navigated = false;
-      }
-    });
-  }
+  // actualyNabBar() {
+  //   this.router.routeReuseStrategy.shouldReuseRoute = (() => {
+  //     return false;
+  //   });
+  //   this.subscribe = this.router.events.subscribe((event) => {
+  //     if (event instanceof NavigationEnd){
+  //       this.router.navigated = false;
+  //     }
+  //   });
+  // }
 
   // alert deconnexion
   async presentAlert() {
