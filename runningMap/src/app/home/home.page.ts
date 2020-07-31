@@ -16,17 +16,17 @@ export class HomePage implements OnInit {
   pseudo = null;
 
 
-  editMenu$ = new Observable<boolean>(observer => {
-    this.storage.get('pseudo').then((val) => {
-      this.pseudo = val;
+  // editMenu$ = new Observable<boolean>(observer => {
+  //   this.storage.get('pseudo').then((val) => {
+  //     this.pseudo = val;
 
-      if (this.pseudo) {
-        observer.next(false);
-      } else {
-        observer.next(true);
-      }
-    });
-  });
+  //     if (this.pseudo) {
+  //       observer.next(false);
+  //     } else {
+  //       observer.next(true);
+  //     }
+  //   });
+  // });
 
 
 

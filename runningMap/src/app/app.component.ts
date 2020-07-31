@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Observable } from 'rxjs';
+import { UserService } from './services/user.service';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -11,11 +14,28 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent {
   navigate: any;
+  pseudo = null;
+  currentUser;
+
+
+  editMenu$ = new Observable<boolean>(observer => {
+    this.storage.get('pseudo').then((val) => {
+      this.pseudo = val;
+
+      if (this.pseudo) {
+        observer.next(false);
+      } else {
+        observer.next(true);
+      }
+    });
+  });
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private userService: UserService,
+    private storage: Storage
   ) {
     this.sideMenu();
     this.initializeApp();
