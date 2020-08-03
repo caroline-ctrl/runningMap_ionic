@@ -16,17 +16,17 @@ export class HomePage implements OnInit {
   pseudo = null;
 
 
-  // editMenu$ = new Observable<boolean>(observer => {
-  //   this.storage.get('pseudo').then((val) => {
-  //     this.pseudo = val;
+  editMenu$ = new Observable<boolean>(observer => {
+    this.storage.get('pseudo').then((val) => {
+      this.pseudo = val;
 
-  //     if (this.pseudo) {
-  //       observer.next(false);
-  //     } else {
-  //       observer.next(true);
-  //     }
-  //   });
-  // });
+      if (this.pseudo) {
+        observer.next(true);
+      } else {
+        observer.next(false);
+      }
+    });
+  });
 
 
 
@@ -45,11 +45,11 @@ export class HomePage implements OnInit {
   }
 
   // deconnexion
-  removeDataStorage() {
-    this.storage.remove('pseudo');
-    this.presentAlert();
-    // this.actualyNabBar();
-  }
+  // removeDataStorage() {
+  //   this.storage.remove('pseudo');
+  //   this.presentAlert();
+  //   // this.actualyNabBar();
+  // }
 
 
   // actualiser la navbar
@@ -64,14 +64,14 @@ export class HomePage implements OnInit {
   //   });
   // }
 
-  // alert deconnexion
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Deconnexion',
-      message: 'Vous êtes bien déconnecté',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
+  // // alert deconnexion
+  // async presentAlert() {
+  //   const alert = await this.alertController.create({
+  //     cssClass: 'my-custom-class',
+  //     header: 'Deconnexion',
+  //     message: 'Vous êtes bien déconnecté',
+  //     buttons: ['OK']
+  //   });
+  //   await alert.present();
+  // }
 }

@@ -5,6 +5,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Observable } from 'rxjs';
 import { UserService } from './services/user.service';
 import { Storage } from '@ionic/storage';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -16,29 +19,33 @@ export class AppComponent {
   navigate: any;
   pseudo = null;
   currentUser;
+  editMenu$;
 
 
-  editMenu$ = new Observable<boolean>(observer => {
-    this.storage.get('pseudo').then((val) => {
-      this.pseudo = val;
-
-      if (this.pseudo) {
-        observer.next(false);
-      } else {
-        observer.next(true);
-      }
+  ionViewWillEnter() {
+    this.editMenu$ = new Observable<boolean>(observer => {
+      this.storage.get('pseudo').then((val) => {
+  console.log(val)
+        if (val) {
+          observer.next(false);
+        } else {
+          observer.next(true);
+        }
+      });
     });
-  });
+  }
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private userService: UserService,
-    private storage: Storage
+    private storage: Storage,
+    public alertController: AlertController,
+    private router: Router
   ) {
     this.sideMenu();
     this.initializeApp();
+    this.ionViewWillEnter();
   }
 
   initializeApp() {
@@ -73,4 +80,23 @@ export class AppComponent {
       }
     ];
   }
+
+    // deconnexion
+    removeDataStorage() {
+      this.storage.remove('pseudo');
+      this.presentAlert();
+      // this.actualyNabBar();
+    }
+
+      // alert deconnexion
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Deconnexion',
+      message: 'Vous êtes bien déconnecté',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
 }
